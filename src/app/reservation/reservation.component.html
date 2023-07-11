@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+<div class="container" style="height: 90vh;">
+  <div class="title text-center mt-5">
+    <h1>
+      Rezervasyon Oluştur
+    </h1>
+  </div>
+    <div class="row" style="margin-top: 5%;">
+        <div class="col-lg-6">
+            <!-- Sol tarafta form elemanları -->
+            <form action="" [formGroup]="reservationAddForm" (ngSubmit)="addReservation()" >
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Adınız" aria-label="Adınız" formControlName="name">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Soyadınız" aria-label="Soyadınız" formControlName="surname">
+                    </div>
+                </div>
+    
+                <div class="row mt-4">
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="T.C Kimlik No" formControlName="identify">
+                    </div>
+                    <div class="col">
+                      <input type="date" class="form-control" placeholder="Doğum Tarihi" formControlName="bornDate">
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="Telefon Numarası" formControlName="phoneNumber">
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="Mail Adresi" formControlName="email">
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col">
+                      <input type="date" class="form-control" placeholder="Giriş Tarihi" formControlName="startDate">
+                    </div>
+                    <div class="col">
+                      <input type="date" class="form-control" placeholder="Çıkış Tarihi" formControlName="endDate">
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="Ülke" formControlName="country">
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="İl" formControlName="city">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="İlçe" formControlName="district">
+                      </div>
+                  </div>
+    
+                  <div class="row mt-4">
+                    <div class="col">
+                      <select class="form-select" aria-label="Default select example" formControlName="house">
+                        <option *ngFor="let data of houseData.data" [value]="data.price">{{data.title}}</option>
+                      </select>
+                      
+                    </div>
+                  </div>
+    
+                  <div class="row mt-4">
+                    <div class="col text-center">
+                        <button type="submit" class="btn btn-warning">
+                            Rezervasyon Yaptır
+                        </button>
+                    </div>
+                  </div>
+            </form>
+              
+        </div>
+        <div class="col-lg-6">
+            <!-- Sağ tarafta bir resim -->
+            <img class="mt-auto" src="formHeader.jpg" alt="Resim Açıklaması">
+        </div>
+    </div>
+</div>

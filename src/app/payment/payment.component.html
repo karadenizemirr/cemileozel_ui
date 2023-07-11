@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+  <div class="card text-center w-50 shadow">
+    <div class="card-header text-white d-flex justify-content-between align-items-center">
+      <div class="">
+        <h5 class="card-title mt-3">
+          Ödeme Bilgileri
+        </h5>
+      </div>
+      <div class="d-none d-md-flex">
+        <img src="mc_symbol.svg" alt="Mastercard Logo" style="width: 50px; height: 50px;">
+        <img src="ms_hrz_pos.svg" alt="Mastercard Logo" style="width: 120px; height: 50px;">
+      </div>
+    </div>
+    
+    <form [formGroup]="paymentForm" (ngSubmit)="addPayment()" >
+      <div class="card-body">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="cardNumber" placeholder="Kart Numaranızı Girin" formControlName="cardNumber">
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <input type="text" class="form-control" id="expirationDate" placeholder="AA/YY" formControlName="expDate">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" id="cvv" placeholder="CVV" formControlName="ccv">
+          </div>
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" id="cardHolderName" placeholder="Kart Sahibinin Adını Girin" formControlName="nameSurname">
+        </div>
+        <p>
+          Toplam Çekilecek Tutar: {{price}}
+        </p>
+        <input type="text" class="form-control" hidden id="cvv" placeholder="CVV" formControlName="price">
+        <button class="btn btn-primary btn-block mt-3" type="submit">Ödemeyi Tamamla</button>
+      </div>
+    </form>
+  </div>
+</div>
