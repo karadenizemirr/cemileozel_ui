@@ -7,7 +7,6 @@ import { HomeComponent } from './home/home.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AlertifyService } from './customService/alertify.service';
 import { PaymentComponent } from './payment/payment.component';
 import { CardsecureComponent } from './cardsecure/cardsecure.component';
 import { ApiService } from './customService/api.service';
@@ -26,7 +25,7 @@ import { ApiService } from './customService/api.service';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AlertifyService,ApiService],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
