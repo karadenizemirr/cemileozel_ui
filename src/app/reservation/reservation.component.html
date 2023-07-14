@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
-<div class="container" style="height: 90vh;">
-  <div class="title text-center mt-5">
-    <h1>
-      Rezervasyon Oluştur
-    </h1>
-  </div>
-    <div class="row" style="margin-top: 5%;">
+<div class="title text-center mt-5">
+  <h1>
+    Rezervasyon Oluştur
+  </h1>
+</div>
+<div class="container" style="height: 60vh; display: flex; justify-content: center; align-items: center;">
+    <div class="row" style="margin-top: 10%;">
         <div class="col-lg-6">
             <!-- Sol tarafta form elemanları -->
             <form action="" [formGroup]="reservationAddForm" (ngSubmit)="addReservation()" >
@@ -20,7 +20,7 @@
     
                 <div class="row mt-4">
                     <div class="col">
-                      <input type="text" class="form-control" placeholder="T.C Kimlik No" formControlName="identify">
+                      <input type="text" class="form-control" placeholder="T.C Kimlik No" formControlName="identifier">
                     </div>
                     <div class="col">
                       <input type="date" class="form-control" placeholder="Doğum Tarihi" formControlName="bornDate">
@@ -36,10 +36,10 @@
                   </div>
                   <div class="row mt-4">
                     <div class="col">
-                      <input type="date" class="form-control" placeholder="Giriş Tarihi" formControlName="startDate">
+                      <input type="date" class="form-control" placeholder="Giriş Tarihi" formControlName="startDate" min="2022-01" max="2030-12">
                     </div>
                     <div class="col">
-                      <input type="date" class="form-control" placeholder="Çıkış Tarihi" formControlName="endDate">
+                      <input type="date" class="form-control" placeholder="Çıkış Tarihi" formControlName="endDate" min="2022-01" max="2030-12">
                     </div>
                   </div>
                   <div class="row mt-4">
@@ -56,10 +56,18 @@
     
                   <div class="row mt-4">
                     <div class="col">
-                      <select class="form-select" aria-label="Default select example" formControlName="house">
-                        <option *ngFor="let data of houseData.data" [value]="data.price">{{data.title}}</option>
+                      <select class="form-select" aria-label="Default select example" formControlName="house" (change)="onChangeDropdown($event)">
+                        <option *ngFor="let data of houseData.data" [value]="data.id">{{data.title}}</option>
                       </select>
                       
+                    </div>
+                  </div>
+
+                  <div class="row mt-4">
+                    <div class="col text-center">
+                      <span *ngIf="selectHouseData?.data?.price !== null && selectHouseData?.data?.price !== undefined">
+                        <b>Seçtiğiniz Evin Fiyatı: </b>{{selectHouseData.data.price}} ₺
+                      </span>
                     </div>
                   </div>
     
@@ -75,7 +83,30 @@
         </div>
         <div class="col-lg-6">
             <!-- Sağ tarafta bir resim -->
-            <img class="mt-auto" src="formHeader.jpg" alt="Resim Açıklaması">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" *ngIf="selectHouseData?.data?.images !== null && selectHouseData?.data?.images !== undefined">
+              <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+              </ol>
+              <div class="carousel-inner">
+                <div class="carousel-item active" *ngFor="let image of selectHouseData.data.images">
+                  <img class="d-block w-100" [src]="imgUrl + '/' + image.path" alt="First slide">
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+
+            <div class="images" *ngIf="selectHouseData?.data?.images === null || selectHouseData?.data?.images === undefined">
+              <img src="formHeader.jpg" alt="">
+            </div>
         </div>
     </div>
 </div>

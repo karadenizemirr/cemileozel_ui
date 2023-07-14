@@ -10,6 +10,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PaymentComponent } from './payment/payment.component';
 import { CardsecureComponent } from './cardsecure/cardsecure.component';
 import { ApiService } from './customService/api.service';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.component';
+import { ProcessComponent } from './admin/process/process.component';
+import { AlertifyService } from './customService/alertify.service';
+import { LoginComponent } from './admin/login/login.component';
+import { AdminHouseComponent } from './admin/admin-house/admin-house.component';
+import { environment } from 'src/environment.prod';
+import { CustomCookieService } from './customService/cookie.service';
 
 @NgModule({
   declarations: [
@@ -19,13 +27,18 @@ import { ApiService } from './customService/api.service';
     NavbarComponent,
     PaymentComponent,
     CardsecureComponent,
+    AdminHomeComponent,
+    AdminNavbarComponent,
+    ProcessComponent,
+    LoginComponent,
+    AdminHouseComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, AlertifyService,{provide: 'imgUrl', useValue: environment.imgUrl}, CustomCookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

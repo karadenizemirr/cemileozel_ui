@@ -19,10 +19,15 @@
             "polyfills": [
               "zone.js"
             ],
+            "allowedCommonJsDependencies": [
+              "crypto-js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/assets/css",
+              "src/assets/css/secure",
               {
                 "glob": "**/*",
                 "input": "src/assets",
@@ -31,10 +36,12 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/alertifyjs/build/alertify.min.js"
             ]
           },
           "configurations": {
@@ -49,13 +56,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "200kb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "200kb",
+                  "maximumError": "500kb"
                 }
               ],
               "outputHashing": "all",
@@ -71,8 +78,8 @@
               "optimization": { 
                 "scripts": true, 
                 "styles": { 
-                  "minify": true, 
-                  "inlineCritical": false 
+                  "minify": true,
+                  "inlineCritical": false
                 }
                 },
               "vendorChunk": true,

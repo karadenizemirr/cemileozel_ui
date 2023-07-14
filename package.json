@@ -8,7 +8,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "heroku-postbuild": "ng build"
-    
   },
   "private": true,
   "dependencies": {
@@ -20,18 +19,28 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "@auth0/angular-jwt": "^5.1.2",
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "alertifyjs": "^1.13.1",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
+    "crypto-js": "^4.1.1",
+    "cryptojs": "^2.5.3",
+    "jquery": "^3.7.0",
+    "ng-file-upload": "^12.2.13",
+    "ngx-cookie-service": "^16.0.0",
     "rxjs": "~7.8.0",
     "tckimlikno": "^1.0.1",
     "tslib": "^2.3.0",
+    "typescript": "~5.1.3",
     "zone.js": "~0.13.0",
-    "typescript": "~5.1.3"
+    "postcss": "^8.4.25"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.1.4",
     "@angular/cli": "~16.1.4",
     "@angular/compiler-cli": "^16.1.0",
+    "@types/crypto-js": "^4.1.1",
     "@types/jasmine": "~4.3.0",
     "autoprefixer": "^10.4.14",
     "jasmine-core": "~4.6.0",
@@ -46,6 +55,6 @@
   },
   "engines": {
     "node": "18.16.1",
-    "npm" :"9.5.1"
+    "npm": "9.5.1"
   }
 }

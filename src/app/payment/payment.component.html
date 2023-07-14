@@ -21,7 +21,7 @@
         </div>
         <div class="row mb-3">
           <div class="col">
-            <input type="text" class="form-control" id="expirationDate" placeholder="AA/YY" formControlName="expDate">
+            <input type="text" class="form-control" id="expirationDate" placeholder="AA/YY" formControlName="expDate" >
           </div>
           <div class="col">
             <input type="text" class="form-control" id="cvv" placeholder="CVV" formControlName="ccv">
@@ -33,7 +33,7 @@
         <p>
           Toplam Çekilecek Tutar: {{price}}
         </p>
-        <input type="text" class="form-control" hidden id="cvv" placeholder="CVV" formControlName="price">
+        <input type="text" class="form-control" formControlName="price" [(ngModel)]="price" hidden>
         <button class="btn btn-primary btn-block mt-3" type="submit">Ödemeyi Tamamla</button>
       </div>
     </form>

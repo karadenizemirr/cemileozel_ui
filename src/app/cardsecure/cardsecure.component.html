@@ -23,15 +23,15 @@
         </div>
         <div class="text-group">
           <p>İşlem Tutarı:</p>
-          <p>Test işyeri</p>
+          <p>{{price}}</p>
         </div>
         <div class="text-group">
           <p>İşlem Tarihi/Saati:</p>
-          <p>Test işyeri</p>
+          <p>{{currentDateTime}}</p>
         </div>
         <div class="text-group">
           <p>Kart Numarası:</p>
-          <p>Test işyeri</p>
+          <p>xxxx-xxxx-xxxx-xxxx</p>
         </div>
       </div>
 
@@ -42,6 +42,14 @@
             aria-describedby="button-addon1">
         </div>
         <small class="form-text text-muted font-sm text-mini">SMS doğrulama kodu telefonunuza gönderildi.</small>
+        <div class="counter">
+          <small class="form-text text-muted font-sm text-mini">
+            {{minutes}} dakika {{seconds}} saniye
+          </small>
+          <small class="badge badge-sm badge-danger" *ngIf="liveAppointmentData?.data?.secure?.message">
+            {{liveAppointmentData.data.secure.message}}
+          </small>
+        </div>
       </div>
       <div class="text-center">
         <a href="/" class="text-mini mr-3 p-3 text-primary">İşlemi İptal Et</a>
