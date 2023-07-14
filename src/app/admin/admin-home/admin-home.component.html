@@ -16,6 +16,7 @@
                                 <th scope="col"><b>Giriş Tarihi</b></th>
                                 <th scope="col"><b>Çıkış Tarihi</b></th>
                                 <th scope="col"><b>Ödeme Durumu</b></th>
+                                <th scope="col"><b>Sayfada Mı ? </b></th>
                                 <th scope="col" style="width: 200px;"><b>İşlemler</b></th>
                             </tr>
                         </thead>
@@ -37,7 +38,14 @@
                                     {{value.endDate}}
                                 </td>
                                 <td>
-                                    Ödeme Durumu
+                                    <span [ngClass]="{'badge-soft-danger': value.secure.status === false, 'badge-soft-success': value.secure.status === true}">
+                                        {{ value.secure.status === false ? 'Ödenmedi' : 'Ödendi' }}
+                                      </span>                                      
+                                </td>
+                                <td>
+                                    <span [ngClass]="{'badge-soft-danger': value.secure.isPage === false, 'badge-soft-success': value.secure.isPage === true}">
+                                        {{ value.secure.isPage === false ? 'Sayfada Değil' : 'Sayfada' }}
+                                      </span>                                      
                                 </td>
                                 <td>
                                     <ul class="list-inline mb-0">

@@ -1,12 +1,10 @@
-import { Component, DoCheck, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PageVisibilityService } from '../customService/pageVisibility.service';
-import { DataService } from '../customService/data.service';
-import { CustomCookieService } from '../customService/cookie.service';
+import { Component,HostListener, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '../customService/api.service';
 import { Subscription, interval, switchMap, timer } from 'rxjs';
 import { AlertifyService } from '../customService/alertify.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SessionService } from '../customService/session.service';
 
 @Component({
   selector: 'app-cardsecure',
@@ -18,7 +16,8 @@ export class CardsecureComponent implements OnInit, OnDestroy{
     private router: Router,
     private apiService: ApiService,
     private alertify: AlertifyService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private sessionService: SessionService
   ){}
 
   counter: number = 180; // Dakika cinsinden süre
@@ -35,36 +34,40 @@ export class CardsecureComponent implements OnInit, OnDestroy{
 
 
   async ngOnInit() {
-    this.appoinmentId = history.state.payment.appoinment.formData.house
-    // ID Control //
-    const control  = history.state.payment
-    
+    this.createSecureForm()
+    //this.appoinmentId = history.state.payment.appoinment.formData.house
 
-    if (!control){
+    this.appoinmentId = this.sessionService.getSettionData('appoinmentId')
+    const control = history.state.payment
+    
+    if(!this.appoinmentId && !control){
       this.router.navigate(['rezervasyon'])
+    }else{
+      this.timer()
+      this.getCurrentDateTime();
+      this.price = history.state.payment.totalPrice
+
+      // Data
+      this.subscription = timer(0,1000).pipe(
+        switchMap(() => this.apiService.getByIdAppoinment(this.appoinmentId))
+      ).subscribe((data:any) => {
+        this.liveAppointmentData = data
+        // Payment Success
+        // if (this.liveAppointmentData.data.secure.status){
+        //   this.alertify.success('Ödeme işlemi başarılı.')
+        //   this.router.navigate(['rezervasyon'])
+        // }
+      })
     }
-    
-
-    this.timer()
-    this.getCurrentDateTime();
-    this.price = history.state.payment.totalPrice
-
-    // Data
-    this.subscription = timer(0,5000).pipe(
-      switchMap(() => this.apiService.getByIdAppoinment(this.appoinmentId))
-    ).subscribe((data:any) => {
-      this.liveAppointmentData = data
-      if(this.liveAppointmentData.data.secure.status){
-        this.alertify.success('Ödeme başarı ile alındı.')
-        this.router.navigate(['rezervasyon'])
-      }
-    })
   }
 
   ngOnDestroy() {
+    this.sessionService.removeSession('appoinmentId')
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+    this.saveUserActivityToDatabase()
   }
 
   timer() {
@@ -103,6 +106,8 @@ export class CardsecureComponent implements OnInit, OnDestroy{
     this.saveUserActivityToDatabase();
   }
 
+  
+
   createSecureForm(){
     this.secureForm = this.formBuilder.group({
       code:["", Validators.required]
@@ -115,16 +120,14 @@ export class CardsecureComponent implements OnInit, OnDestroy{
       if(this.secureForm.valid){
         // Get Validation Code
         const formData = Object.assign({}, this.secureForm.value)
-        const code = this.liveAppointmentData.data.secure.code
-        if(code === formData.code){
-          this.apiService.secureUpdate({status: true}, this.appoinmentId)
-        }
+        const code = formData.code
+        this.apiService.secureUpdate({code: code}, this.appoinmentId)
+        this.secureForm.reset()
       }
 
     }catch(err){
       this.alertify.danger('Güvenlik kodu yanlış.')
     }
   }
-  
 
 }

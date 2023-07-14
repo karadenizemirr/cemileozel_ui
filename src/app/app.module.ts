@@ -17,7 +17,6 @@ import { AlertifyService } from './customService/alertify.service';
 import { LoginComponent } from './admin/login/login.component';
 import { AdminHouseComponent } from './admin/admin-house/admin-house.component';
 import { environment } from 'src/environment.prod';
-import { CustomCookieService } from './customService/cookie.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +37,7 @@ import { CustomCookieService } from './customService/cookie.service';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [ApiService, AlertifyService,{provide: 'imgUrl', useValue: environment.imgUrl}, CustomCookieService],
+  providers: [ApiService, AlertifyService,{provide: 'imgUrl', useValue: environment.imgUrl}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

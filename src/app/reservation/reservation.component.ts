@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../customService/api.service';
 import { AlertifyService } from '../customService/alertify.service';
 import { environment } from 'src/environment.prod';
-import { CustomCookieService } from '../customService/cookie.service';
+import { SessionService } from '../customService/session.service';
 
 @Component({
   selector: 'app-reservation',
@@ -19,7 +19,8 @@ export class ReservationComponent implements OnInit {
     private router: Router, 
     private apiServices: ApiService,
     private alertifyjs: AlertifyService,
-    private cookieService: CustomCookieService
+    private sessionService: SessionService
+
     ) {}
 
   reservationAddForm!: FormGroup;
@@ -67,8 +68,9 @@ export class ReservationComponent implements OnInit {
       this.reservationAddForm.reset()
       this.alertifyjs.success('Kayıt başarılı ödeme sayfasına yönlendiriliyorsunuz.')
       this.router.navigate(['/payment'], {state: {resultData: resultData}})
-      // Create Cookie
-      this.cookieService.setEncryptedCookie('reservation', JSON.stringify(resultData))
+
+      
+      
     }else{
       this.alertifyjs.danger('Bir sorun meydana geldi.')
     }

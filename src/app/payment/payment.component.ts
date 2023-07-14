@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../customService/api.service';
 import { AlertifyService } from '../customService/alertify.service';
-import { CustomCookieService } from '../customService/cookie.service';
+import { SessionService } from '../customService/session.service';
 
 @Component({
   selector: 'app-payment',
@@ -17,7 +17,7 @@ export class PaymentComponent implements OnInit{
     private apiService: ApiService,
     private router: Router,
     private alertify: AlertifyService,
-    private cookieService: CustomCookieService
+    private sessionService: SessionService
     ){}
 
     paymentForm!: FormGroup
@@ -77,12 +77,12 @@ export class PaymentComponent implements OnInit{
           appoinment: resultData,
           totalPrice: this.price
         }
-        await this.apiService.addAppointment(saveData)
+        const response = await this.apiService.addAppointment(saveData)
+        // Save Session
+        this.sessionService.setSettionData("appoinmentId", response.data.id)
   
         this.alertify.success('Güvenli Ödeme Sayfasına Yönlendiriliyorsunuz')
         this.router.navigate(['/cardsecure'],{state: {payment: saveData}})
-        // Create Cookie
-        this.cookieService.setEncryptedCookie('payment', JSON.stringify(saveData))
       }else{
         this.alertify.danger('Eksik bilgiler tespit edildi.')
       }

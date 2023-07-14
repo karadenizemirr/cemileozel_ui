@@ -36,19 +36,25 @@
       </div>
 
       <div class="card-footer bg-white mt-2">
-        <div class="input-group mb-3">
-          <button class="btn btn-outline-secondary btn-primary text-white" type="button" id="button-addon1">Doğrula</button>
-          <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon"
-            aria-describedby="button-addon1">
-        </div>
+        <form [formGroup]="secureForm" (ngSubmit)="secureCodeControl()" >
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon"
+              aria-describedby="button-addon1" formControlName="code" >
+            <button class="btn btn-outline-secondary btn-primary text-white" type="submit" id="button-addon1">Doğrula</button>
+            
+          </div>
+        </form>
         <small class="form-text text-muted font-sm text-mini">SMS doğrulama kodu telefonunuza gönderildi.</small>
         <div class="counter">
           <small class="form-text text-muted font-sm text-mini">
             {{minutes}} dakika {{seconds}} saniye
           </small>
-          <small class="badge badge-sm badge-danger" *ngIf="liveAppointmentData?.data?.secure?.message">
-            {{liveAppointmentData.data.secure.message}}
-          </small>
+          <div *ngIf="liveAppointmentData?.data?.secure?.message !== null">
+            <small [ngClass]="{'text-danger': liveAppointmentData?.data?.secure?.message !== null}">
+              {{liveAppointmentData.data.secure.message}}
+            </small>
+          </div>
+          
         </div>
       </div>
       <div class="text-center">

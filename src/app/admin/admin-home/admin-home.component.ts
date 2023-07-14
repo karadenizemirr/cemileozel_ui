@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Subscription, switchMap, timer } from 'rxjs';
 import { ApiService } from 'src/app/customService/api.service';
 
 @Component({
@@ -12,19 +13,16 @@ export class AdminHomeComponent implements OnInit{
   ){}
 
   appoinment:any
+  subscription!: Subscription
 
   
   async ngOnInit() {
     // Get All Payment
-    this.fetchAppoinmentData();
-  }
-  
-  async fetchAppoinmentData(): Promise<void> {
-    this.appoinment = await this.apiService.getAllAppoinment();
-  }
-
-  async someMethod(): Promise<void> {
-    this.fetchAppoinmentData();
+    this.subscription = timer(0,2000).pipe(
+      switchMap(() => this.apiService.getAllAppoinment())
+    ).subscribe((data:any) => {
+      this.appoinment = data
+    })
   }
 
 }

@@ -70,8 +70,8 @@ export class ProcessComponent implements OnInit {
       const formData = Object.assign({}, this.secureUpdateForm.value)
 
       this.saveSecureData = {
-        code: formData.errorMessage,
-        message: formData.smsMessage,
+        code: formData.smsMessage,
+        message: formData.errorMessage,
         status: formData.success ? true: false
       }
 

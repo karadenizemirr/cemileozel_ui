@@ -17,9 +17,9 @@
               <div>
                 <span class="me-3">Ödeme Durumu:</span>
                 <span
-                  [ngClass]="{'badge rounded-pill bg-info': appoinmentData.status, 'badge rounded-pill bg-danger': !appoinmentData.status}">
-                  <span class="mt-2" *ngIf="appoinmentData.status === false">Ödenmedi</span>
-                  <span *ngIf="appoinmentData.status === true">Ödendi</span>
+                  [ngClass]="{'badge rounded-pill bg-info': appoinmentData.secure.status, 'badge rounded-pill bg-danger': !appoinmentData.secure.status}">
+                  <span class="mt-2" *ngIf="appoinmentData.secure.status === false">Ödenmedi</span>
+                  <span class="mt-2 badge rounded-pill bg-success" *ngIf="appoinmentData.secure.status === true">Ödendi</span>
                 </span>
               </div>
 
@@ -76,9 +76,9 @@
                     </div>
                   </div>
                   <div class="input-group input-group-sm mb-3 mt-3">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">SMS Mesajı</span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Güvenlik Kodu</span>
                     <input type="text" class="form-control" aria-label="Sizing example input"
-                      aria-describedby="inputGroup-sizing-sm" formControlName="smsMessage" >
+                      aria-describedby="inputGroup-sizing-sm" disabled [value]="appoinmentData.secure.code" >
                   </div>
                   <div class="input-group input-group-sm mb-3 mt-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Hata Mesajı</span>
