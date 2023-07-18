@@ -27,6 +27,8 @@ export class PaymentComponent implements OnInit{
   result: any
 
 
+
+
   // Form Operations
   createPaymentForm(){
     this.paymentForm = this.formBuilder.group({
@@ -46,13 +48,16 @@ export class PaymentComponent implements OnInit{
 
     const endDate:any = new Date(resultData.formData.endDate)
     const startDate:any = new Date(resultData.formData.startDate)
+
+    const dateCalculate = this.countWeekdatWeekendDays(startDate, endDate)
+    
     // Get Price
     const houseData = await this.apiService.getHouseDataWithId(resultData.formData.house)
-    const housePrice = houseData.data.price
+    const weekdayPrice = houseData.data.houseProperty.weekdayPrice
+    const weekendPrice = houseData.data.houseProperty.weekendPrice 
 
-    const differenceInMs = Math.abs(endDate.getTime() - startDate.getTime());
-    const differenceInDays = Math.ceil(differenceInMs / (1000 * 60 * 60 * 24));
-    this.price = parseInt(housePrice) * differenceInDays
+    const calculate = (Number(dateCalculate.weekday) * Number(weekendPrice)) + (Number(dateCalculate.weekend) * Number(weekdayPrice))
+    this.price = calculate
   }
 
   async addPayment(){
@@ -88,6 +93,36 @@ export class PaymentComponent implements OnInit{
       }
     }catch(err){
       this.alertify.danger('Bir sorun meydana geldi.')
+    }
+  }
+
+
+  countWeekdatWeekendDays(startDate:any, endDate:any): any{
+    try{
+
+      const start:any = new Date(startDate);
+      const end:any = new Date(endDate);
+    
+      let weekdayCount = 0;
+      let weekendCount = 0;
+    
+      const dayDifference = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+    
+      for (let i = 0; i <= dayDifference; i++) {
+        const currentDate = new Date(start.getTime() + (i * (1000 * 60 * 60 * 24)));
+        const day = currentDate.getDay();
+    
+        if (day === 0 || day === 6) {
+          weekendCount++;
+        } else {
+          weekdayCount++;
+        }
+      }
+    
+      return { weekday: weekdayCount, weekend: weekendCount };
+
+    }catch(err){
+      console.log('Day calculate error')
     }
   }
 }

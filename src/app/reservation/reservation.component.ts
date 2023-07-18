@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../customService/api.service';
 import { AlertifyService } from '../customService/alertify.service';
@@ -28,6 +28,8 @@ export class ReservationComponent implements OnInit {
   houseData:any
   selectHouseData:any
   imgUrl = environment.apiUrl
+  itemSelectId:any
+  selectedOption: string= ""
   
   createReservationAddForm(){
     this.reservationAddForm = this.formBuilder.group({
@@ -53,6 +55,12 @@ export class ReservationComponent implements OnInit {
     this.houseData = this.apiServices.getHouseData().then((data) => {
       this.houseData = data
     })
+
+    // Item Select
+    this.itemSelectId = this.sessionService.getSettionData('houseId')
+    if (this.itemSelectId){
+      this.selectHouseData = await this.apiServices.getHouseDataWithId(this.itemSelectId)
+    }
   }
   
   async addReservation(){
@@ -63,7 +71,8 @@ export class ReservationComponent implements OnInit {
         formData: this.reservation,
         status: "success",
         payment: true,
-        ip : myIP
+        ip : myIP,
+        price: this.selectedOption
       }
       this.reservationAddForm.reset()
       this.alertifyjs.success('Kayıt başarılı ödeme sayfasına yönlendiriliyorsunuz.')
@@ -81,5 +90,9 @@ export class ReservationComponent implements OnInit {
     if (selectedValue !== null && selectedValue !== undefined) {
       this.selectHouseData = await this.apiServices.getHouseDataWithId(selectedValue)
     }
+  }
+
+  handleSelectedOption(event:any) {
+    this.selectedOption = event.target.value
   }
 }

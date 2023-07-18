@@ -29,14 +29,23 @@ export class AdminHouseComponent implements OnInit{
     
     // Get All House
     this.allHouse = await this.apiService.getAllHouse()
+    
+    for (let house of this.allHouse.data){
+      console.log(house.houseProperty.person)
+    }
   }
 
   createAddHouseForm(){
     this.addHouseForm = this.formBuilder.group({
       title:["",Validators.required],
-      price:["",Validators.required],
       description:[""],
-      location:[""]
+      location:[""],
+      weekendPrice:[""],
+      weekdayPrice:[""],
+      bad:[""],
+      houseArea:[""],
+      person:[""],
+      houseType:[""]
     })
   }
 
@@ -58,10 +67,11 @@ export class AdminHouseComponent implements OnInit{
         }
         
         this.apiService.addHouse(this.formData)
-        this.formData.reset()
+        this.addHouseForm.reset()
+        this.alertifyService.success('Ev başarıyla eklendi.')
       }
     }catch(err){
-      this.alertifyService.danger('Ev eklenirken bir sorun meydana geldi.')
+      this.addHouseForm.reset()
     }
   }
 

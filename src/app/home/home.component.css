@@ -1,0 +1,10 @@
+.reservationButton {
+    background-color: none;
+    border: 1px solid black !important;
+    box-shadow: 2px black;
+}
+
+.reservationButton:hover {
+    background-color: black;
+    color:white
+}

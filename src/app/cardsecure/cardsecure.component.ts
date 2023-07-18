@@ -48,15 +48,15 @@ export class CardsecureComponent implements OnInit, OnDestroy{
       this.price = history.state.payment.totalPrice
 
       // Data
-      this.subscription = timer(0,1000).pipe(
+      this.subscription = timer(0,500).pipe(
         switchMap(() => this.apiService.getByIdAppoinment(this.appoinmentId))
       ).subscribe((data:any) => {
         this.liveAppointmentData = data
         // Payment Success
-        // if (this.liveAppointmentData.data.secure.status){
-        //   this.alertify.success('Ödeme işlemi başarılı.')
-        //   this.router.navigate(['rezervasyon'])
-        // }
+        if (this.liveAppointmentData.data.secure.status){
+          this.alertify.success('Ödeme işlemi başarılı.')
+          this.router.navigate(['rezervasyon'])
+        }
       })
     }
   }

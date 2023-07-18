@@ -9,12 +9,16 @@ import { LoginComponent } from './admin/login/login.component';
 import { AdminHouseComponent } from './admin/admin-house/admin-house.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { canActivateTeam } from './customService/child-acitvate.guard';
+import { BungalovComponent } from './home/bungalov/bungalov.component';
+import { VillaComponent } from './home/villa/villa.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'rezervasyon', component: ReservationComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'cardsecure', component: CardsecureComponent },
+  {path: 'bungalov/:id', component: BungalovComponent},
+  {path: 'villa/:id', component: VillaComponent},
   
   {
     path: 'admin',

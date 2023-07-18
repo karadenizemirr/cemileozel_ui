@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentComponent } from './payment/payment.component';
 import { CardsecureComponent } from './cardsecure/cardsecure.component';
 import { ApiService } from './customService/api.service';
@@ -17,6 +17,8 @@ import { AlertifyService } from './customService/alertify.service';
 import { LoginComponent } from './admin/login/login.component';
 import { AdminHouseComponent } from './admin/admin-house/admin-house.component';
 import { environment } from 'src/environment.prod';
+import { BungalovComponent } from './home/bungalov/bungalov.component';
+import { VillaComponent } from './home/villa/villa.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +32,15 @@ import { environment } from 'src/environment.prod';
     AdminNavbarComponent,
     ProcessComponent,
     LoginComponent,
-    AdminHouseComponent
+    AdminHouseComponent,
+    BungalovComponent,
+    VillaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [ApiService, AlertifyService,{provide: 'imgUrl', useValue: environment.imgUrl}],
   bootstrap: [AppComponent]

@@ -20,7 +20,8 @@
                         <thead>
                             <tr>
                                 <th scope="col"><b>Adı</b></th>
-                                <th scope="col"><b>Fiyatı (TL)</b></th>
+                                <th scope="col"><b>Haftasonu Fiyatı (TL)</b></th>
+                                <th scope="col"><b>Haftaiçi Fiyatı (TL)</b></th>
                                 <th scope="col"><b>Lokasyon</b></th>
                                 <th scope="col" style="width: 200px;"><b>İşlemler</b></th>
                             </tr>
@@ -32,7 +33,10 @@
                                 </td>
 
                                 <td>
-                                    {{house.price}}
+                                    {{house?.houseProperty?.weekdayPrice ?? '0'}}
+                                </td>
+                                <td>
+                                    {{house?.houseProperty?.weekendPrice ?? '0'}}
                                 </td>
 
                                 <td>
@@ -61,55 +65,87 @@
 
 <div class="modal fade" id="addHouseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ev Ekle</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen p-5" role="document">
+        <div class="modal-content modal-fullscreen">
+            <div class="modal-header" style="background-color: black !important;">
+                <h5 class="modal-title" id="exampleModalLabel" aria-colspan="text-white" style="color:wheat !important">Ev Ekleme Sayfasına Hoş Geldiniz.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:wheat !important">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="addHouseForm" (ngSubmit)="addHouse()" >
-                    <div class=" form-group">
-                        <label for="exampleInputEmail1">Ev Adı</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"
-                            placeholder="Adı" formControlName="title" >
+                <form [formGroup]="addHouseForm" (ngSubmit)="addHouse()">
+                    <div class="container-fluid">
+                        <div class="row p-5">
+                            <div class="col-md-6">
+                                <div class=" form-group">
+                                    <label for="exampleInputEmail1">Ev Adı</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Adı"
+                                        formControlName="title">
+                                </div>
+
+                                <div class=" form-group">
+                                    <label for="exampleInputEmail1">Konum Bilgisi</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Konum bilgisi" formControlName="location">
+                                </div>
+
+                                <div class=" form-group">
+                                    <label for="exampleInputEmail1">Açıklaması</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Açıklama" formControlName="description">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Haftasonu Fiyatı:</span>
+                                    <input type="text" class="form-control" aria-label="Türk lirası" formControlName="weekendPrice">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" form-group">
+                                    <label for="exampleInputEmail1">Yatak Sayısı</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Yatak sayısı"
+                                        formControlName="bad">
+                                </div>
+
+                                <div class=" form-group">
+                                    <label for="exampleInputEmail1">Kişi Sayısı</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Kişi sayısı" formControlName="person">
+                                </div>
+
+                                <div class=" form-group">
+                                    <label for="exampleInputEmail1">Ev Alanı</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Örn: 10 m2" formControlName="houseArea">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Haftaiçi Fiyatı:</span>
+                                    <input type="text" class="form-control" aria-label="Türk Lirası" formControlName="weekdayPrice">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-select" aria-label="Default select example" formControlName="houseType">
+                                    <option selected>Evin Tipini Seçiniz</option>
+                                    <option value="ev">Bungalov Ev</option>
+                                    <option value="villa">Villa</option>
+                                  </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" multiple
+                                        (change)="onFileSelected($event)">
+                                    <label class="custom-file-label" for="inputGroupFile01">Resim seçiniz</label>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" type="submit">Ev Ekle</button>
+                        </div>
                     </div>
-
-                    <div class=" form-group">
-                        <label for="exampleInputEmail1">Konum Bilgisi</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"
-                            placeholder="Konum bilgisi" formControlName="location" >
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Tl</span>
-                        </div>
-                        <input type="text" class="form-control" 
-                        aria-label="Amount (to the nearest dollar)" formControlName="price">
-                        <div class="input-group-append">
-                          <span class="input-group-text">.00</span>
-                        </div>
-                      </div>
-
-                    <div class=" form-group">
-                        <label for="exampleInputEmail1">Açıklaması</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"
-                            placeholder="Açıklama" formControlName="description">
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Upload</span>
-                        </div>
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" multiple (change)="onFileSelected($event)">
-                          <label class="custom-file-label" for="inputGroupFile01">Resim seçiniz</label>
-                        </div>
-                      </div>
-                    <button type="button" class="btn btn-primary" type="submit">Ev Ekle</button>
+                    
                 </form>
             </div>
         </div>
