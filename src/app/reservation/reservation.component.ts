@@ -5,6 +5,7 @@ import { ApiService } from '../customService/api.service';
 import { AlertifyService } from '../customService/alertify.service';
 import { environment } from 'src/environment.prod';
 import { SessionService } from '../customService/session.service';
+import { bornDateValidator, dateValidator, emailValidator, phoneNumberValidator, stringValidator } from '../validation/customValidaton';
 
 @Component({
   selector: 'app-reservation',
@@ -29,35 +30,31 @@ export class ReservationComponent implements OnInit {
   selectHouseData:any
   imgUrl = environment.apiUrl
   itemSelectId:any
-  selectedOption: string= ""
   
   createReservationAddForm(){
     this.reservationAddForm = this.formBuilder.group({
       // Validation
-      name:["",Validators.required],
-      surname:["",Validators.required],
+      name:["",Validators.required,stringValidator()],
+      surname:["",Validators.required, stringValidator()],
       identifier:["",Validators.required],
-      bornDate: ["",Validators.required],
-      phoneNumber: [""],
-      email: [""],
-      startDate: [""],
-      endDate: [""],
-      country: [""],
-      city: [""],
-      district: [""],
-      house: [""]
+      bornDate: ["",Validators.required,bornDateValidator()],
+      phoneNumber: ["",Validators.required,phoneNumberValidator()],
+      email: ["",Validators.required,emailValidator()],
+      startDate: ["",Validators.required,dateValidator()],
+      endDate: ["",Validators.required,dateValidator()],
+      country: ["",Validators.required,stringValidator()],
+      city: ["",Validators.required,stringValidator()],
+      district: ["",Validators.required,stringValidator()],
+      house: ["",Validators.required]
     })
   }
 
   async ngOnInit() {
     this.apiServices.isLoggedIn()
     this.createReservationAddForm()
-    this.houseData = this.apiServices.getHouseData().then((data) => {
-      this.houseData = data
-    })
-
+    this.houseData = await this.apiServices.getHouseData()
     // Item Select
-    this.itemSelectId = this.sessionService.getSettionData('houseId')
+    this.itemSelectId = this.sessionService.getSettionData('houseId')?? 1
     if (this.itemSelectId){
       this.selectHouseData = await this.apiServices.getHouseDataWithId(this.itemSelectId)
     }
@@ -71,8 +68,7 @@ export class ReservationComponent implements OnInit {
         formData: this.reservation,
         status: "success",
         payment: true,
-        ip : myIP,
-        price: this.selectedOption
+        ip : myIP
       }
       this.reservationAddForm.reset()
       this.alertifyjs.success('Kayıt başarılı ödeme sayfasına yönlendiriliyorsunuz.')
@@ -81,7 +77,10 @@ export class ReservationComponent implements OnInit {
       
       
     }else{
-      this.alertifyjs.danger('Bir sorun meydana geldi.')
+      
+      console.log(this.reservationAddForm.get('name'))
+      
+      
     }
   }
 
@@ -90,9 +89,5 @@ export class ReservationComponent implements OnInit {
     if (selectedValue !== null && selectedValue !== undefined) {
       this.selectHouseData = await this.apiServices.getHouseDataWithId(selectedValue)
     }
-  }
-
-  handleSelectedOption(event:any) {
-    this.selectedOption = event.target.value
   }
 }

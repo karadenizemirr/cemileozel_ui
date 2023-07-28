@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { Subscription, switchMap, timer } from 'rxjs';
+import { AlertifyService } from 'src/app/customService/alertify.service';
 import { ApiService } from 'src/app/customService/api.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { ApiService } from 'src/app/customService/api.service';
 })
 export class AdminHomeComponent implements OnInit{
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertfiyService: AlertifyService
   ){}
 
   appoinment:any
@@ -23,6 +25,16 @@ export class AdminHomeComponent implements OnInit{
     ).subscribe((data:any) => {
       this.appoinment = data
     })
+  }
+
+  removeItemClick(id:number){
+    try{
+
+      this.apiService.removeAppoinment(id)
+
+    }catch(err){
+      this.alertfiyService.danger('Randevu silinirken bir sorun meydana geldi.')
+    }
   }
 
 }

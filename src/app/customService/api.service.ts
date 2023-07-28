@@ -180,4 +180,16 @@ export class ApiService {
             console.log('app error')
         }
     }
+
+    // Appoinment Delete
+    async removeAppoinment(id:number){
+        try{
+            const response = await axios.get(this.baseURL + '/appoinment/delete/' + id.toString())
+            return response.data
+
+        }catch(err){
+            console.log(err)
+            this.alertify.danger('Randevu silinirken bir sorun meydana geldi.')
+        }
+    }
 }

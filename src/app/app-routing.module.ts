@@ -11,6 +11,7 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { canActivateTeam } from './customService/child-acitvate.guard';
 import { BungalovComponent } from './home/bungalov/bungalov.component';
 import { VillaComponent } from './home/villa/villa.component';
+import { HousesComponent } from './home/houses/houses.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'cardsecure', component: CardsecureComponent },
   {path: 'bungalov/:id', component: BungalovComponent},
   {path: 'villa/:id', component: VillaComponent},
+  {path: 'evler', component: HousesComponent},
   
   {
     path: 'admin',

@@ -19,6 +19,7 @@ import { AdminHouseComponent } from './admin/admin-house/admin-house.component';
 import { environment } from 'src/environment.prod';
 import { BungalovComponent } from './home/bungalov/bungalov.component';
 import { VillaComponent } from './home/villa/villa.component';
+import { HousesComponent } from './home/houses/houses.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { VillaComponent } from './home/villa/villa.component';
     LoginComponent,
     AdminHouseComponent,
     BungalovComponent,
-    VillaComponent
+    VillaComponent,
+    HousesComponent
   ],
   imports: [
     BrowserModule,
